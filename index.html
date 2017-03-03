@@ -1,0 +1,75 @@
+<h1>Bear Biker</h1>
+
+<p id="chugs">sup</p>
+<p id="laps">sup</p>
+<p id="alcohol">sup</p>
+<p id="chuggers">sup</p>
+<p id="bikers">sup</p>
+
+<div>
+    <button id="chug-button">Chug</button>
+    <button id="bike-button">Bike</button>
+</div>
+
+<div>
+    <button id="hire-chugger">Hire chugger: 10 alcohols</button>
+    <button id="hire-biker">Hire biker: 10 alcohols</button>
+</div>
+
+<script>
+
+var chugs = 0;
+var laps = 0;
+var alcohol = 0;
+var chuggers = 0;
+var bikers = 0;
+
+document.getElementById("chug-button").onclick = function() {
+    chugs += 1;
+    update();
+};
+document.getElementById("bike-button").onclick = function() {
+    if (chugs > 0) {
+        chugs -= 1;
+        laps += 1;
+        alcohol += 1;
+        update();
+    }
+};
+document.getElementById("hire-chugger").onclick = function() {
+    if (alcohol >= 10) {
+        alcohol -= 10;
+        chuggers += 1
+        update();
+    }
+};
+document.getElementById("hire-biker").onclick = function() {
+    if (alcohol >= 10) {
+        alcohol -= 10;
+        bikers += 1
+        update();
+    }
+};
+var update = function() {
+    document.getElementById("chugs").innerHTML = "chugs: " + chugs;
+    document.getElementById("laps").innerHTML = "laps completed: " + laps;
+    document.getElementById("alcohol").innerHTML = "alcohol: " + alcohol;
+    document.getElementById("chuggers").innerHTML = "chuggers: " + chuggers;
+    document.getElementById("bikers").innerHTML = "bikers: " + bikers;
+}
+var tick = function() {
+    chugs += chuggers;
+    if (bikers > chugs) {
+        laps += chugs;
+        alcohol += chugs;
+        chugs = 0;
+    } else {
+        laps += bikers;
+        alcohol += bikers;
+        chugs -= bikers;
+    }
+    update();
+}
+update();
+setInterval(tick, 1000)
+</script>
